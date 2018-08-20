@@ -24,6 +24,7 @@
   ],
   "dependencies": {
     "@nsis/nlf": "^0.3.0",
+    "commander": "^2.17.1",
     "log-symbols": "^2.2.0",
     "util": "^0.11.0"
   },
