@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc --project ./",
     "lint": "tslint --project .",
-    "precommit": "npm run lint"
+    "precommit": "npm run lint",
+    "test": "npm run lint"
   },
   "main": "index.js",
   "bin": {
