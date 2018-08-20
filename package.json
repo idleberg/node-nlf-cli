@@ -1,0 +1,38 @@
+{
+  "name": "@nsis/nlf-cli",
+  "version": "0.0.0",
+  "description": "CLI tool to convert NSIS Language Files to JSON and vice versa",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc --project ./",
+    "lint": "tslint --project .",
+    "precommit": "npm run lint",
+    "test": "npx ava ./test/default.js --verbose"
+  },
+  "main": "index.js",
+  "bin": {
+    "nlf": "./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/idleberg/node-nlf.git"
+  },
+  "keywords": [
+    "nsis",
+    "nsis language file",
+    "converter"
+  ],
+  "dependencies": {
+    "@nsis/nlf": "^0.3.0",
+    "log-symbols": "^2.2.0",
+    "util": "^0.11.0"
+  },
+  "devDependencies": {
+    "@types/node": "^10.5.6",
+    "ava": "^1.0.0-beta.7",
+    "glob": "^7.1.2",
+    "husky": "^0.14.3",
+    "tslint": "^5.11.0",
+    "typescript": "^3.0.1"
+  }
+}
