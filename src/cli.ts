@@ -25,30 +25,32 @@ if (program.args.length === 0) {
   program.help();
 }
 
-let input, output;
+let input, output, fileOutput;
 const indentation = (program.minify) ? 0 : 2;
 
-program.args.forEach( async file => {
-  if (file.endsWith('.nlf')) {
+program.args.forEach( async fileInput => {
+  if (fileInput.endsWith('.nlf')) {
     try {
-      input = await reada(file, 'utf8');
-      output = NLF.parse(input);
-      writa(setOutName(file, '.json'), JSON.stringify(output, null, indentation));
-      console.log(`${symbols.success} ${file}`);
+      input = await reada(fileInput, 'utf8');
+      output = NLF.parse(input, false, indentation);
+      fileOutput = setOutName(fileInput, '.json');
+      writa(fileOutput, output);
+      console.log(`${symbols.success} ${fileInput} → ${fileOutput}`);
     } catch (err) {
-      console.error(`${symbols.error} ${file} failed`);
+      console.error(`${symbols.error} ${fileInput} failed`);
     }
-  } else if (file.endsWith('.json')) {
+  } else if (fileInput.endsWith('.json')) {
     try {
-      input = await reada(file, 'utf8');
+      input = await reada(fileInput, 'utf8');
       output = NLF.stringify(input);
-      writa(setOutName(file, '.nlf'), output);
-      console.log(`${symbols.success} ${file}`);
+      fileOutput = setOutName(fileInput, '.nlf');
+      writa(fileOutput, output);
+      console.log(`${symbols.success} ${fileInput} → ${fileOutput}`);
     } catch (err) {
-      console.error(`${symbols.error} ${file} failed`);
+      console.error(`${symbols.error} ${fileInput} failed`);
     }
   } else {
-    console.warn(`${symbols.warning} ${file} skipped`);
+    console.warn(`${symbols.warning} ${fileInput} skipped`);
   }
 });
 

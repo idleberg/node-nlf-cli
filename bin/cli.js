@@ -58,48 +58,50 @@ program
 if (program.args.length === 0) {
     program.help();
 }
-var input, output;
+var input, output, fileOutput;
 var indentation = (program.minify) ? 0 : 2;
-program.args.forEach(function (file) { return __awaiter(_this, void 0, void 0, function () {
+program.args.forEach(function (fileInput) { return __awaiter(_this, void 0, void 0, function () {
     var err_1, err_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                if (!file.endsWith('.nlf')) return [3 /*break*/, 5];
+                if (!fileInput.endsWith('.nlf')) return [3 /*break*/, 5];
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, reada(file, 'utf8')];
+                return [4 /*yield*/, reada(fileInput, 'utf8')];
             case 2:
                 input = _a.sent();
-                output = NLF.parse(input);
-                writa(setOutName(file, '.json'), JSON.stringify(output, null, indentation));
-                console.log(symbols.success + " " + file);
+                output = NLF.parse(input, false, indentation);
+                fileOutput = setOutName(fileInput, '.json');
+                writa(fileOutput, output);
+                console.log(symbols.success + " " + fileInput + " \u2192 " + fileOutput);
                 return [3 /*break*/, 4];
             case 3:
                 err_1 = _a.sent();
-                console.error(symbols.error + " " + file + " failed");
+                console.error(symbols.error + " " + fileInput + " failed");
                 return [3 /*break*/, 4];
             case 4: return [3 /*break*/, 11];
             case 5:
-                if (!file.endsWith('.json')) return [3 /*break*/, 10];
+                if (!fileInput.endsWith('.json')) return [3 /*break*/, 10];
                 _a.label = 6;
             case 6:
                 _a.trys.push([6, 8, , 9]);
-                return [4 /*yield*/, reada(file, 'utf8')];
+                return [4 /*yield*/, reada(fileInput, 'utf8')];
             case 7:
                 input = _a.sent();
                 output = NLF.stringify(input);
-                writa(setOutName(file, '.nlf'), output);
-                console.log(symbols.success + " " + file);
+                fileOutput = setOutName(fileInput, '.nlf');
+                writa(fileOutput, output);
+                console.log(symbols.success + " " + fileInput + " \u2192 " + fileOutput);
                 return [3 /*break*/, 9];
             case 8:
                 err_2 = _a.sent();
-                console.error(symbols.error + " " + file + " failed");
+                console.error(symbols.error + " " + fileInput + " failed");
                 return [3 /*break*/, 9];
             case 9: return [3 /*break*/, 11];
             case 10:
-                console.warn(symbols.warning + " " + file + " skipped");
+                console.warn(symbols.warning + " " + fileInput + " skipped");
                 _a.label = 11;
             case 11: return [2 /*return*/];
         }
