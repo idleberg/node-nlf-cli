@@ -72,7 +72,7 @@ program.args.forEach(function (fileInput) { return __awaiter(_this, void 0, void
                 return [4 /*yield*/, reada(fileInput, 'utf8')];
             case 2:
                 input = _a.sent();
-                output = NLF.parse(input, false, indentation);
+                output = NLF.parse(input, true, indentation);
                 fileOutput = setOutName(fileInput, '.json');
                 writa(fileOutput, output);
                 console.log(symbols.success + " " + fileInput + " \u2192 " + fileOutput);

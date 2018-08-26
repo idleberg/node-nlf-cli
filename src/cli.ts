@@ -32,7 +32,7 @@ program.args.forEach( async fileInput => {
   if (fileInput.endsWith('.nlf')) {
     try {
       input = await reada(fileInput, 'utf8');
-      output = NLF.parse(input, false, indentation);
+      output = NLF.parse(input, true, indentation);
       fileOutput = setOutName(fileInput, '.json');
       writa(fileOutput, output);
       console.log(`${symbols.success} ${fileInput} → ${fileOutput}`);
