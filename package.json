@@ -24,6 +24,7 @@
   ],
   "dependencies": {
     "@nsis/nlf": "^0.4.1",
+    "chromafi": "^2.1.0",
     "commander": "^2.17.1",
     "log-symbols": "^2.2.0",
     "update-notifier": "^2.5.0",

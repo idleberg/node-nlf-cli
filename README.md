@@ -20,6 +20,8 @@ You can now use the `nlf` command to convert language files:
 nlf Contrib/Language\ files/English.nlf
 ```
 
+See `nlf --help` for available options
+
 ## License
 
 This work is licensed under [The MIT License](https://opensource.org/licenses/MIT)

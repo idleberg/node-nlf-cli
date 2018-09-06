@@ -38,6 +38,7 @@ var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var meta = require('../package.json');
 // Dependencies
+var chromafi = require("chromafi");
 var NLF = require("@nsis/nlf");
 var program = require("commander");
 var symbols = require("log-symbols");
@@ -50,10 +51,12 @@ var writa = util_1.promisify(fs_1.writeFile);
 // Action
 program
     .version(meta.version)
-    .description('CLI version of node-makensis')
+    .description('CLI tool to convert NSIS Language Files to JSON and vice versa')
     .arguments('[options] <file ...>')
     .usage('[options] <file ...>')
+    .option('-l, --line-numbers', 'print line-numbers in stdout', false)
     .option('-m, --minify', 'minifies output JSON', false)
+    .option('-s, --stdout', 'print result in stdout', false)
     .parse(process.argv);
 if (program.args.length === 0) {
     program.help();
@@ -73,9 +76,14 @@ program.args.forEach(function (fileInput) { return __awaiter(_this, void 0, void
             case 2:
                 input = _a.sent();
                 output = NLF.parse(input, true, indentation);
-                fileOutput = setOutName(fileInput, '.json');
-                writa(fileOutput, output);
-                console.log(symbols.success + " " + fileInput + " \u2192 " + fileOutput);
+                if (program.stdout) {
+                    console.log(chromafi(output, { lineNumbers: program.lineNumbers }));
+                }
+                else {
+                    fileOutput = setOutName(fileInput, '.json');
+                    writa(fileOutput, output);
+                    console.log(symbols.success + " " + fileInput + " \u2192 " + fileOutput);
+                }
                 return [3 /*break*/, 4];
             case 3:
                 err_1 = _a.sent();
@@ -91,9 +99,14 @@ program.args.forEach(function (fileInput) { return __awaiter(_this, void 0, void
             case 7:
                 input = _a.sent();
                 output = NLF.stringify(input);
-                fileOutput = setOutName(fileInput, '.nlf');
-                writa(fileOutput, output);
-                console.log(symbols.success + " " + fileInput + " \u2192 " + fileOutput);
+                if (program.stdout) {
+                    console.log(chromafi(output, { lineNumbers: program.lineNumbers }));
+                }
+                else {
+                    fileOutput = setOutName(fileInput, '.nlf');
+                    writa(fileOutput, output);
+                    console.log(symbols.success + " " + fileInput + " \u2192 " + fileOutput);
+                }
                 return [3 /*break*/, 9];
             case 8:
                 err_2 = _a.sent();
