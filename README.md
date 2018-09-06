@@ -20,7 +20,18 @@ You can now use the `nlf` command to convert language files:
 nlf Contrib/Language\ files/English.nlf
 ```
 
-See `nlf --help` for available options
+### Options
+
+Runing `nlf --help` list available flags
+
+```sh
+-V, --version    output the version number
+-m, --minify     minifies output JSON
+--no-colors      suppresses colors in stdout
+--no-lines       suppresses line-numbers in stdout
+-s, --stdout     print result in stdout
+-h, --help       output usage information
+``
 
 ## License
 

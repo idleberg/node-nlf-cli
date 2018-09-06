@@ -19,8 +19,9 @@ program
   .description('CLI tool to convert NSIS Language Files to JSON and vice versa')
   .arguments('[options] <file ...>')
   .usage('[options] <file ...>')
-  .option('-l, --line-numbers', 'print line-numbers in stdout', false)
-  .option('-m, --minify', 'minifies output JSON', false)
+  .option('-m, --minify', 'minifies output JSON', true)
+  .option('--no-colors', 'suppresses colors in stdout', true)
+  .option('--no-lines', 'suppresses line-numbers in stdout', true)
   .option('-s, --stdout', 'print result in stdout', false)
   .parse(process.argv);
 
@@ -29,16 +30,16 @@ if (program.args.length === 0) {
 }
 
 let input, output, fileOutput;
-const indentation = (program.minify) ? 0 : 2;
 
 program.args.forEach( async fileInput => {
   if (fileInput.endsWith('.nlf')) {
     try {
       input = await reada(fileInput, 'utf8');
-      output = NLF.parse(input, true, indentation);
+      output = NLF.parse(input, true, program.minify);
 
       if (program.stdout) {
-        console.log(chromafi(output, { lineNumbers: program.lineNumbers }));
+        output = chromafi(output, { lineNumbers: program.lines });
+        console.log(output);
       } else {
         fileOutput = setOutName(fileInput, '.json');
         writa(fileOutput, output);
@@ -53,7 +54,8 @@ program.args.forEach( async fileInput => {
       output = NLF.stringify(input);
 
       if (program.stdout) {
-        console.log(chromafi(output, { lineNumbers: program.lineNumbers }));
+        output = chromafi(output, { lineNumbers: program.lines });
+        console.log(output);
       } else {
         fileOutput = setOutName(fileInput, '.nlf');
         writa(fileOutput, output);

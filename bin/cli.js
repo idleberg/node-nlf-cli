@@ -54,15 +54,15 @@ program
     .description('CLI tool to convert NSIS Language Files to JSON and vice versa')
     .arguments('[options] <file ...>')
     .usage('[options] <file ...>')
-    .option('-l, --line-numbers', 'print line-numbers in stdout', false)
-    .option('-m, --minify', 'minifies output JSON', false)
+    .option('-m, --minify', 'minifies output JSON', true)
+    .option('--no-colors', 'suppresses colors in stdout', true)
+    .option('--no-lines', 'suppresses line-numbers in stdout', true)
     .option('-s, --stdout', 'print result in stdout', false)
     .parse(process.argv);
 if (program.args.length === 0) {
     program.help();
 }
 var input, output, fileOutput;
-var indentation = (program.minify) ? 0 : 2;
 program.args.forEach(function (fileInput) { return __awaiter(_this, void 0, void 0, function () {
     var err_1, err_2;
     return __generator(this, function (_a) {
@@ -75,9 +75,10 @@ program.args.forEach(function (fileInput) { return __awaiter(_this, void 0, void
                 return [4 /*yield*/, reada(fileInput, 'utf8')];
             case 2:
                 input = _a.sent();
-                output = NLF.parse(input, true, indentation);
+                output = NLF.parse(input, true, program.minify);
                 if (program.stdout) {
-                    console.log(chromafi(output, { lineNumbers: program.lineNumbers }));
+                    output = chromafi(output, { lineNumbers: program.lines });
+                    console.log(output);
                 }
                 else {
                     fileOutput = setOutName(fileInput, '.json');
@@ -100,7 +101,8 @@ program.args.forEach(function (fileInput) { return __awaiter(_this, void 0, void
                 input = _a.sent();
                 output = NLF.stringify(input);
                 if (program.stdout) {
-                    console.log(chromafi(output, { lineNumbers: program.lineNumbers }));
+                    output = chromafi(output, { lineNumbers: program.lines });
+                    console.log(output);
                 }
                 else {
                     fileOutput = setOutName(fileInput, '.nlf');
