@@ -31,7 +31,7 @@ Runing `nlf --help` list available flags
 --no-lines       suppresses line-numbers in stdout
 -s, --stdout     print result in stdout
 -h, --help       output usage information
-``
+```
 
 ## License
 
