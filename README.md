@@ -24,7 +24,7 @@ nlf Contrib/Language\ files/English.nlf
 
 Runing `nlf --help` list available flags
 
-```sh
+```
 -V, --version    output the version number
 -m, --minify     minifies output JSON
 --no-colors      suppresses colors in stdout
