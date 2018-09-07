@@ -75,7 +75,7 @@ program.args.forEach(function (fileInput) { return __awaiter(_this, void 0, void
                 return [4 /*yield*/, reada(fileInput, 'utf8')];
             case 2:
                 input = _a.sent();
-                output = NLF.parse(input, true, program.minify);
+                output = NLF.parse(input, { stringify: true, minify: program.minify });
                 if (program.stdout) {
                     output = chromafi(output, { lineNumbers: program.lines });
                     console.log(output);

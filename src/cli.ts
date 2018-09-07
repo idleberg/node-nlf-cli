@@ -35,7 +35,7 @@ program.args.forEach( async fileInput => {
   if (fileInput.endsWith('.nlf')) {
     try {
       input = await reada(fileInput, 'utf8');
-      output = NLF.parse(input, true, program.minify);
+      output = NLF.parse(input, { stringify: true, minify: program.minify });
 
       if (program.stdout) {
         output = chromafi(output, { lineNumbers: program.lines });

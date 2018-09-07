@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@nsis/nlf@^0.4.1":
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/@nsis/nlf/-/nlf-0.4.1.tgz#5dd48615692c238f236daeda677eecc4434e45b8"
+"@nsis/nlf@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@nsis/nlf/-/nlf-0.5.0.tgz#46d6ad0f65c64ef1dd1ca865b9b614e5e9bc7e9c"
 
 "@types/node@*":
   version "10.9.4"
