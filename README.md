@@ -22,15 +22,15 @@ nlf Contrib/Language\ files/English.nlf
 
 ### Options
 
-Runing `nlf --help` list available flags
+Running `nlf --help` list available flags
 
 ```
--V, --version    output the version number
--m, --minify     minifies output JSON
+--version    output the version number
+--minify     minifies output JSON
 --no-colors      suppresses colors in stdout
 --no-lines       suppresses line-numbers in stdout
--s, --stdout     print result in stdout
--h, --help       output usage information
+--stdout     print result in stdout
+--help       output usage information
 ```
 
 ## License
