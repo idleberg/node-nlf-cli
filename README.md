@@ -27,8 +27,8 @@ Running `nlf --help` list available flags
 ```
 --version    output the version number
 --minify     minifies output JSON
---no-colors      suppresses colors in stdout
---no-lines       suppresses line-numbers in stdout
+--no-colors  suppresses colors in stdout
+--no-lines   suppresses line-numbers in stdout
 --stdout     print result in stdout
 --help       output usage information
 ```
