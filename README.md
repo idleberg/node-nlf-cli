@@ -35,7 +35,7 @@ Running `nlf --help` list available flags
 
 ## Related
 
-- [nlf-cli](https://www.npmjs.org/package/@nsis/nlf) - command-line tool to convert NLF files
+- [nlf](https://www.npmjs.org/package/@nsis/nlf) - library to convert NLF files
 
 ## License
 
