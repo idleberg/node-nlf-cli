@@ -57,7 +57,7 @@ program
     .option('-m, --minify', 'minifies output JSON', true)
     .option('--no-colors', 'suppresses colors in stdout', true)
     .option('--no-lines', 'suppresses line-numbers in stdout', true)
-    .option('-s, --stdout', 'print result in stdout', false)
+    .option('-s, --stdout', 'print result to stdout', false)
     .parse(process.argv);
 if (program.args.length === 0) {
     program.help();
