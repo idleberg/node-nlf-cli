@@ -19,9 +19,9 @@ program
   .description('CLI tool to convert NSIS Language Files to JSON and vice versa')
   .arguments('[options] <file ...>')
   .usage('[options] <file ...>')
-  .option('-m, --minify', 'minifies output JSON', true)
-  .option('--no-colors', 'suppresses colors in stdout', true)
-  .option('--no-lines', 'suppresses line-numbers in stdout', true)
+  .option('-m, --minify', 'minify output JSON', true)
+  .option('--no-colors', 'suppress colors in stdout', true)
+  .option('--no-lines', 'suppress line-numbers in stdout', true)
   .option('-s, --stdout', 'print result to stdout', false)
   .parse(process.argv);
 
