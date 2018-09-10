@@ -29,9 +29,13 @@ Running `nlf --help` list available flags
 --minify     minifies output JSON
 --no-colors  suppresses colors in stdout
 --no-lines   suppresses line-numbers in stdout
---stdout     print result in stdout
+--stdout     print result to stdout
 --help       output usage information
 ```
+
+## Related
+
+- [nlf-cli](https://www.npmjs.org/package/@nsis/nlf) - command-line tool to convert NLF files
 
 ## License
 
