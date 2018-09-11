@@ -20,7 +20,6 @@ program
   .arguments('[options] <file ...>')
   .usage('[options] <file ...>')
   .option('-m, --minify', 'minify output JSON', true)
-  .option('--no-colors', 'suppress colors in stdout', true)
   .option('--no-lines', 'suppress line-numbers in stdout', true)
   .option('-s, --stdout', 'print result to stdout', false)
   .parse(process.argv);
