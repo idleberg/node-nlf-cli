@@ -31,35 +31,19 @@ if (program.args.length === 0) {
 let input, output, fileOutput;
 
 program.args.forEach( async fileInput => {
+  input = await reada(fileInput, 'utf8');
+
   if (fileInput.endsWith('.nlf')) {
     try {
-      input = await reada(fileInput, 'utf8');
       output = NLF.parse(input, { stringify: true, minify: program.minify });
-
-      if (program.stdout) {
-        output = chromafi(output, { lineNumbers: program.lines });
-        console.log(output);
-      } else {
-        fileOutput = setOutName(fileInput, '.json');
-        writa(fileOutput, output);
-        console.log(`${symbols.success} ${fileInput} → ${fileOutput}`);
-      }
+      printResult(program, output, fileInput, 'json');
     } catch (err) {
       console.error(`${symbols.error} ${fileInput} failed`);
     }
   } else if (fileInput.endsWith('.json')) {
     try {
-      input = await reada(fileInput, 'utf8');
       output = NLF.stringify(input);
-
-      if (program.stdout) {
-        output = chromafi(output, { lineNumbers: program.lines });
-        console.log(output);
-      } else {
-        fileOutput = setOutName(fileInput, '.nlf');
-        writa(fileOutput, output);
-        console.log(`${symbols.success} ${fileInput} → ${fileOutput}`);
-      }
+      printResult(program, output, fileInput, 'nlf');
     } catch (err) {
       console.error(`${symbols.error} ${fileInput} failed`);
     }
@@ -67,6 +51,17 @@ program.args.forEach( async fileInput => {
     console.warn(`${symbols.warning} ${fileInput} skipped`);
   }
 });
+
+const printResult = (program, output, fileInput, extension) => {
+  if (program.stdout) {
+    output = chromafi(output, { lineNumbers: program.lines });
+    console.log(output);
+  } else {
+    fileOutput = setOutName(fileInput, `.${extension}`);
+    writa(fileOutput, output);
+    console.log(`${symbols.success} ${fileInput} → ${fileOutput}`);
+  }
+};
 
 const setOutName = (file: string, extName: string) => {
   return basename(file, extname(file)) + extName;

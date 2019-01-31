@@ -54,9 +54,8 @@ program
     .description('CLI tool to convert NSIS Language Files to JSON and vice versa')
     .arguments('[options] <file ...>')
     .usage('[options] <file ...>')
-    .option('-m, --minify', 'minifies output JSON', true)
-    .option('--no-colors', 'suppresses colors in stdout', true)
-    .option('--no-lines', 'suppresses line-numbers in stdout', true)
+    .option('-m, --minify', 'minify output JSON', true)
+    .option('-l, --no-lines', 'suppress line-numbers in stdout', true)
     .option('-s, --stdout', 'print result to stdout', false)
     .parse(process.argv);
 if (program.args.length === 0) {
@@ -64,64 +63,47 @@ if (program.args.length === 0) {
 }
 var input, output, fileOutput;
 program.args.forEach(function (fileInput) { return __awaiter(_this, void 0, void 0, function () {
-    var err_1, err_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0:
-                if (!fileInput.endsWith('.nlf')) return [3 /*break*/, 5];
-                _a.label = 1;
+            case 0: return [4 /*yield*/, reada(fileInput, 'utf8')];
             case 1:
-                _a.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, reada(fileInput, 'utf8')];
-            case 2:
                 input = _a.sent();
-                output = NLF.parse(input, { stringify: true, minify: program.minify });
-                if (program.stdout) {
-                    output = chromafi(output, { lineNumbers: program.lines });
-                    console.log(output);
+                if (fileInput.endsWith('.nlf')) {
+                    try {
+                        output = NLF.parse(input, { stringify: true, minify: program.minify });
+                        printResult(program, output, fileInput, 'json');
+                    }
+                    catch (err) {
+                        console.error(symbols.error + " " + fileInput + " failed");
+                    }
+                }
+                else if (fileInput.endsWith('.json')) {
+                    try {
+                        output = NLF.stringify(input);
+                        printResult(program, output, fileInput, 'nlf');
+                    }
+                    catch (err) {
+                        console.error(symbols.error + " " + fileInput + " failed");
+                    }
                 }
                 else {
-                    fileOutput = setOutName(fileInput, '.json');
-                    writa(fileOutput, output);
-                    console.log(symbols.success + " " + fileInput + " \u2192 " + fileOutput);
+                    console.warn(symbols.warning + " " + fileInput + " skipped");
                 }
-                return [3 /*break*/, 4];
-            case 3:
-                err_1 = _a.sent();
-                console.error(symbols.error + " " + fileInput + " failed");
-                return [3 /*break*/, 4];
-            case 4: return [3 /*break*/, 11];
-            case 5:
-                if (!fileInput.endsWith('.json')) return [3 /*break*/, 10];
-                _a.label = 6;
-            case 6:
-                _a.trys.push([6, 8, , 9]);
-                return [4 /*yield*/, reada(fileInput, 'utf8')];
-            case 7:
-                input = _a.sent();
-                output = NLF.stringify(input);
-                if (program.stdout) {
-                    output = chromafi(output, { lineNumbers: program.lines });
-                    console.log(output);
-                }
-                else {
-                    fileOutput = setOutName(fileInput, '.nlf');
-                    writa(fileOutput, output);
-                    console.log(symbols.success + " " + fileInput + " \u2192 " + fileOutput);
-                }
-                return [3 /*break*/, 9];
-            case 8:
-                err_2 = _a.sent();
-                console.error(symbols.error + " " + fileInput + " failed");
-                return [3 /*break*/, 9];
-            case 9: return [3 /*break*/, 11];
-            case 10:
-                console.warn(symbols.warning + " " + fileInput + " skipped");
-                _a.label = 11;
-            case 11: return [2 /*return*/];
+                return [2 /*return*/];
         }
     });
 }); });
+var printResult = function (program, output, fileInput, extension) {
+    if (program.stdout) {
+        output = chromafi(output, { lineNumbers: program.lines });
+        console.log(output);
+    }
+    else {
+        fileOutput = setOutName(fileInput, "." + extension);
+        writa(fileOutput, output);
+        console.log(symbols.success + " " + fileInput + " \u2192 " + fileOutput);
+    }
+};
 var setOutName = function (file, extName) {
     return path_1.basename(file, path_1.extname(file)) + extName;
 };
