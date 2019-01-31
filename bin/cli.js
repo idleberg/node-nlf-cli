@@ -42,6 +42,7 @@ var chromafi = require("chromafi");
 var NLF = require("@nsis/nlf");
 var program = require("commander");
 var symbols = require("log-symbols");
+var getStdin = require("get-stdin");
 var fs_1 = require("fs");
 var path_1 = require("path");
 var util_1 = require("util");
@@ -58,50 +59,97 @@ program
     .option('-l, --no-lines', 'suppress line-numbers in stdout', true)
     .option('-s, --stdout', 'print result to stdout', false)
     .parse(process.argv);
-if (program.args.length === 0) {
-    program.help();
-}
-var input, output, fileOutput;
-program.args.forEach(function (fileInput) { return __awaiter(_this, void 0, void 0, function () {
+var contents, output, outputName;
+(function () { return __awaiter(_this, void 0, void 0, function () {
+    var stdIn;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, reada(fileInput, 'utf8')];
+            case 0: return [4 /*yield*/, getStdin()];
             case 1:
-                input = _a.sent();
-                if (fileInput.endsWith('.nlf')) {
-                    try {
-                        output = NLF.parse(input, { stringify: true, minify: program.minify });
-                        printResult(program, output, fileInput, 'json');
-                    }
-                    catch (err) {
-                        console.error(symbols.error + " " + fileInput + " failed");
-                    }
+                stdIn = _a.sent();
+                if (program.args.length > 0) {
+                    fileMode(program);
                 }
-                else if (fileInput.endsWith('.json')) {
-                    try {
-                        output = NLF.stringify(input);
-                        printResult(program, output, fileInput, 'nlf');
-                    }
-                    catch (err) {
-                        console.error(symbols.error + " " + fileInput + " failed");
-                    }
+                else if (stdIn.length > 0) {
+                    streamMode(stdIn);
                 }
                 else {
-                    console.warn(symbols.warning + " " + fileInput + " skipped");
+                    program.help();
                 }
                 return [2 /*return*/];
         }
     });
-}); });
-var printResult = function (program, output, fileInput, extension) {
+}); })();
+var fileMode = function (program) {
+    program.args.forEach(function (input) { return __awaiter(_this, void 0, void 0, function () {
+        var err_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    return [4 /*yield*/, reada(input, 'utf8')];
+                case 1:
+                    contents = _a.sent();
+                    return [3 /*break*/, 3];
+                case 2:
+                    err_1 = _a.sent();
+                    console.warn(symbols.warning + " " + input + " not found");
+                    return [2 /*return*/];
+                case 3:
+                    if (input.endsWith('.nlf')) {
+                        try {
+                            output = NLF.parse(contents, { stringify: true, minify: program.minify });
+                            printResult(input, output, 'json');
+                        }
+                        catch (err) {
+                            console.error(symbols.error + " " + input + " failed");
+                        }
+                    }
+                    else if (input.endsWith('.json')) {
+                        try {
+                            output = NLF.stringify(contents);
+                            printResult(input, output, 'nlf');
+                        }
+                        catch (err) {
+                            console.error(symbols.error + " " + input + " failed");
+                        }
+                    }
+                    else {
+                        console.warn(symbols.warning + " " + input + " skipped");
+                    }
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+};
+var streamMode = function (input) {
+    program.stdout = true;
+    program.lines = false;
+    try {
+        JSON.parse(input);
+        output = NLF.stringify(input);
+        printResult(input, output);
+    }
+    catch (err) {
+        if (err instanceof SyntaxError) {
+            output = NLF.parse(input);
+            printResult(input, output);
+        }
+        else {
+            console.error(err);
+        }
+    }
+};
+var printResult = function (input, output, extension) {
+    if (extension === void 0) { extension = 'json'; }
     if (program.stdout) {
         output = chromafi(output, { lineNumbers: program.lines });
         console.log(output);
     }
     else {
-        fileOutput = setOutName(fileInput, "." + extension);
-        writa(fileOutput, output);
-        console.log(symbols.success + " " + fileInput + " \u2192 " + fileOutput);
+        outputName = setOutName(input, "." + extension);
+        writa(outputName, output);
+        console.log(symbols.success + " " + input + " \u2192 " + outputName);
     }
 };
 var setOutName = function (file, extName) {

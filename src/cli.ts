@@ -5,6 +5,7 @@ import * as chromafi from 'chromafi';
 import * as NLF from '@nsis/nlf';
 import * as program from 'commander';
 import * as symbols from 'log-symbols';
+import * as getStdin from 'get-stdin';
 import { readFile, writeFile } from 'fs';
 import { basename, extname } from 'path';
 import { promisify } from 'util';
@@ -24,42 +25,76 @@ program
   .option('-s, --stdout', 'print result to stdout', false)
   .parse(process.argv);
 
-if (program.args.length === 0) {
-  program.help();
-}
+let contents, output, outputName;
 
-let input, output, fileOutput;
+(async () => {
+  const stdIn = await getStdin();
 
-program.args.forEach( async fileInput => {
-  input = await reada(fileInput, 'utf8');
-
-  if (fileInput.endsWith('.nlf')) {
-    try {
-      output = NLF.parse(input, { stringify: true, minify: program.minify });
-      printResult(program, output, fileInput, 'json');
-    } catch (err) {
-      console.error(`${symbols.error} ${fileInput} failed`);
-    }
-  } else if (fileInput.endsWith('.json')) {
-    try {
-      output = NLF.stringify(input);
-      printResult(program, output, fileInput, 'nlf');
-    } catch (err) {
-      console.error(`${symbols.error} ${fileInput} failed`);
-    }
+  if (program.args.length > 0) {
+    fileMode(program);
+  } else if (stdIn.length > 0) {
+    streamMode(stdIn);
   } else {
-    console.warn(`${symbols.warning} ${fileInput} skipped`);
+    program.help();
   }
-});
 
-const printResult = (program, output, fileInput, extension) => {
+})();
+
+const fileMode = program => {
+  program.args.forEach( async input => {
+    try {
+      contents = await reada(input, 'utf8');
+    } catch (err) {
+      console.warn(`${symbols.warning} ${input} not found`);
+      return;
+    }
+
+    if (input.endsWith('.nlf')) {
+      try {
+        output = NLF.parse(contents, { stringify: true, minify: program.minify });
+        printResult(input, output, 'json');
+      } catch (err) {
+        console.error(`${symbols.error} ${input} failed`);
+      }
+    } else if (input.endsWith('.json')) {
+      try {
+        output = NLF.stringify(contents);
+        printResult(input, output, 'nlf');
+      } catch (err) {
+        console.error(`${symbols.error} ${input} failed`);
+      }
+    } else {
+      console.warn(`${symbols.warning} ${input} skipped`);
+    }
+  });
+};
+
+const streamMode = (input) => {
+  program.stdout = true;
+  program.lines = false;
+
+  try {
+    JSON.parse(input);
+    output = NLF.stringify(input);
+    printResult(input, output);
+  } catch (err) {
+    if (err instanceof SyntaxError) {
+      output = NLF.parse(input);
+      printResult(input, output);
+    } else {
+      console.error(err);
+    }
+  }
+};
+
+const printResult = (input, output, extension = 'json') => {
   if (program.stdout) {
     output = chromafi(output, { lineNumbers: program.lines });
     console.log(output);
   } else {
-    fileOutput = setOutName(fileInput, `.${extension}`);
-    writa(fileOutput, output);
-    console.log(`${symbols.success} ${fileInput} → ${fileOutput}`);
+    outputName = setOutName(input, `.${extension}`);
+    writa(outputName, output);
+    console.log(`${symbols.success} ${input} → ${outputName}`);
   }
 };
 
