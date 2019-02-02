@@ -25,8 +25,6 @@ program
   .option('-s, --stdout', 'print result to stdout', false)
   .parse(process.argv);
 
-let contents, output, outputName;
-
 (async () => {
   const stdIn = await getStdin();
 
@@ -41,6 +39,8 @@ let contents, output, outputName;
 })();
 
 const fileMode = program => {
+  let contents, output;
+
   program.args.forEach( async input => {
     try {
       contents = await reada(input, 'utf8');
@@ -70,6 +70,8 @@ const fileMode = program => {
 };
 
 const streamMode = (input) => {
+  let output;
+
   program.stdout = true;
   program.lines = false;
 
@@ -88,6 +90,8 @@ const streamMode = (input) => {
 };
 
 const printResult = (input, output, extension = 'json') => {
+  let outputName;
+
   if (program.stdout) {
     output = chromafi(output, { lineNumbers: program.lines });
     console.log(output);

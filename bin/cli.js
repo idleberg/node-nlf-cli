@@ -59,7 +59,6 @@ program
     .option('-l, --no-lines', 'suppress line-numbers in stdout', true)
     .option('-s, --stdout', 'print result to stdout', false)
     .parse(process.argv);
-var contents, output, outputName;
 (function () { return __awaiter(_this, void 0, void 0, function () {
     var stdIn;
     return __generator(this, function (_a) {
@@ -81,6 +80,7 @@ var contents, output, outputName;
     });
 }); })();
 var fileMode = function (program) {
+    var contents, output;
     program.args.forEach(function (input) { return __awaiter(_this, void 0, void 0, function () {
         var err_1;
         return __generator(this, function (_a) {
@@ -123,6 +123,7 @@ var fileMode = function (program) {
     }); });
 };
 var streamMode = function (input) {
+    var output;
     program.stdout = true;
     program.lines = false;
     try {
@@ -142,6 +143,7 @@ var streamMode = function (input) {
 };
 var printResult = function (input, output, extension) {
     if (extension === void 0) { extension = 'json'; }
+    var outputName;
     if (program.stdout) {
         output = chromafi(output, { lineNumbers: program.lines });
         console.log(output);
