@@ -75,13 +75,14 @@ const streamMode = (input) => {
   program.stdout = true;
   program.lines = false;
 
+
   try {
     JSON.parse(input);
     output = NLF.stringify(input);
     printResult(input, output);
   } catch (err) {
     if (err instanceof SyntaxError) {
-      output = NLF.parse(input);
+      output = NLF.parse(input, { stringify: true, minify: program.minify });
       printResult(input, output);
     } else {
       console.error(err);

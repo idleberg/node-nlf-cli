@@ -133,7 +133,7 @@ var streamMode = function (input) {
     }
     catch (err) {
         if (err instanceof SyntaxError) {
-            output = NLF.parse(input);
+            output = NLF.parse(input, { stringify: true, minify: program.minify });
             printResult(input, output);
         }
         else {
