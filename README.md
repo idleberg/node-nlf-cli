@@ -17,7 +17,11 @@ CLI tool to convert NSIS Language Files to JSON and vice versa
 You can now use the `nlf` command to convert language files:
 
 ```sh
+# Standard usage
 nlf Contrib/Language\ files/English.nlf
+
+# Alternatively, use stdin
+cat Contrib/Language\ files/English.nlf | nlf
 ```
 
 ### Options
