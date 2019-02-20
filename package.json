@@ -4,7 +4,8 @@
   "description": "CLI tool to convert NSIS Language Files to JSON and vice versa",
   "license": "MIT",
   "scripts": {
-    "build": "tsc --project ./",
+    "build": "tsc --watch --pretty --project ./",
+    "dev": "tsc --watch --pretty --project ./",
     "lint": "tslint --project .",
     "precommit": "npm run lint",
     "test": "npm run lint"
