@@ -7,7 +7,7 @@ import * as program from 'commander';
 import * as symbols from 'log-symbols';
 import * as getStdin from 'get-stdin';
 import { readFile, writeFile } from 'fs';
-import { basename, extname } from 'path';
+import { basename, extname, join } from 'path';
 import { promisify } from 'util';
 
 // Async functions
@@ -22,6 +22,7 @@ program
   .usage('[options] <file ...>')
   .option('-m, --minify', 'minify output JSON', true)
   .option('-l, --no-lines', 'suppress line-numbers in stdout', true)
+  .option('-o, --output <dir>', 'set the output directory')
   .option('-s, --stdout', 'print result to stdout', false)
   .parse(process.argv);
 
@@ -91,15 +92,16 @@ const streamMode = (input) => {
 };
 
 const printResult = (input, output, extension = 'json') => {
-  let outputName;
+  let outputFile, outputPath;
 
   if (program.stdout) {
     output = chromafi(output, { lineNumbers: program.lines });
     console.log(output);
   } else {
-    outputName = setOutName(input, `.${extension}`);
-    writa(outputName, output);
-    console.log(`${symbols.success} ${input} → ${outputName}`);
+    outputFile = setOutName(input, `.${extension}`);
+    outputPath = (program.output) ? join(program.output, outputFile) : outputFile;
+    writa(outputPath, output);
+    console.log(`${symbols.success} ${input} → ${outputPath}`);
   }
 };
 

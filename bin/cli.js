@@ -57,6 +57,7 @@ program
     .usage('[options] <file ...>')
     .option('-m, --minify', 'minify output JSON', true)
     .option('-l, --no-lines', 'suppress line-numbers in stdout', true)
+    .option('-o, --output <dir>', 'set the output directory')
     .option('-s, --stdout', 'print result to stdout', false)
     .parse(process.argv);
 (function () { return __awaiter(_this, void 0, void 0, function () {
@@ -143,15 +144,16 @@ var streamMode = function (input) {
 };
 var printResult = function (input, output, extension) {
     if (extension === void 0) { extension = 'json'; }
-    var outputName;
+    var outputFile, outputPath;
     if (program.stdout) {
         output = chromafi(output, { lineNumbers: program.lines });
         console.log(output);
     }
     else {
-        outputName = setOutName(input, "." + extension);
-        writa(outputName, output);
-        console.log(symbols.success + " " + input + " \u2192 " + outputName);
+        outputFile = setOutName(input, "." + extension);
+        outputPath = (program.output) ? path_1.join(program.output, outputFile) : outputFile;
+        writa(outputPath, output);
+        console.log(symbols.success + " " + input + " \u2192 " + outputPath);
     }
 };
 var setOutName = function (file, extName) {
