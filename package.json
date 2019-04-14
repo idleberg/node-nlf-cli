@@ -23,7 +23,7 @@
     "converter"
   ],
   "dependencies": {
-    "@nsis/nlf": "^0.6.0",
+    "@nsis/nlf": "^0.6.1",
     "chromafi": "^2.1.0",
     "commander": "^2.20.0",
     "get-stdin": "^6.0.0",
