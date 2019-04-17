@@ -32,7 +32,7 @@ Running `nlf --help` list available flags
 --version    output the version number
 --minify     minify output JSON
 --no-lines   suppress line-numbers in stdout
---output     et the output directory
+--output     set the output directory
 --stdout     print result to stdout
 --help       output usage information
 ```
