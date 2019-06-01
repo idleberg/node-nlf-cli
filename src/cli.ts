@@ -36,7 +36,6 @@ program
   } else {
     program.help();
   }
-
 })();
 
 const fileMode = program => {
@@ -75,7 +74,6 @@ const streamMode = (input) => {
 
   program.stdout = true;
   program.lines = false;
-
 
   try {
     JSON.parse(input);
