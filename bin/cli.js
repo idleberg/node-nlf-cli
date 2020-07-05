@@ -448,7 +448,7 @@ exports.parse = parse;
 exports.stringify = stringify;
 });
 
-var NLF = /*@__PURE__*/unwrapExports(dist);
+var index = /*@__PURE__*/unwrapExports(dist);
 
 // Async functions
 var reada = util.promisify(fs.readFile);
@@ -503,7 +503,7 @@ var fileMode = function (program) {
                 case 3:
                     if (input.endsWith('.nlf')) {
                         try {
-                            output = NLF.parse(contents, { stringify: true, minify: program.minify });
+                            output = index.parse(contents, { stringify: true, minify: program.minify });
                             printResult(input, output, 'json');
                         }
                         catch (err) {
@@ -512,7 +512,7 @@ var fileMode = function (program) {
                     }
                     else if (input.endsWith('.json')) {
                         try {
-                            output = NLF.stringify(contents);
+                            output = index.stringify(contents);
                             printResult(input, output, 'nlf');
                         }
                         catch (err) {
@@ -533,12 +533,12 @@ var streamMode = function (input) {
     program.lines = false;
     try {
         JSON.parse(input);
-        output = NLF.stringify(input);
+        output = index.stringify(input);
         printResult(input, output);
     }
     catch (err) {
         if (err instanceof SyntaxError) {
-            output = NLF.parse(input, { stringify: true, minify: program.minify });
+            output = index.parse(input, { stringify: true, minify: program.minify });
             printResult(input, output);
         }
         else {

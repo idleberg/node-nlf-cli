@@ -1,7 +1,7 @@
 import pkg from '../package.json';
 
 // Dependencies
-import NLF from '@nsis/nlf';
+import * as NLF from '@nsis/nlf';
 import program from 'commander';
 import symbols from 'log-symbols';
 import getStdin from 'get-stdin';
