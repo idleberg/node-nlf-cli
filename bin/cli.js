@@ -2,11 +2,11 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
+var path = require('path');
+var fs = _interopDefault(require('fs'));
+var getStdin = _interopDefault(require('get-stdin'));
 var program = _interopDefault(require('commander'));
 var symbols = _interopDefault(require('log-symbols'));
-var getStdin = _interopDefault(require('get-stdin'));
-var fs = _interopDefault(require('fs'));
-var path = require('path');
 
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation.

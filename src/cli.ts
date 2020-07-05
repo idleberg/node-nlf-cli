@@ -1,12 +1,12 @@
 import pkg from '../package.json';
 
 // Dependencies
+import { basename, extname, join } from 'path';
 import * as NLF from '@nsis/nlf';
+import fs from 'fs';
+import getStdin from 'get-stdin';
 import program from 'commander';
 import symbols from 'log-symbols';
-import getStdin from 'get-stdin';
-import fs from 'fs';
-import { basename, extname, join } from 'path';
 
 // Action
 program

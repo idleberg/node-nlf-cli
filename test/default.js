@@ -1,9 +1,9 @@
 // Dependencies
-import glob from 'glob';
-import test from 'ava';
 import { basename, dirname, join } from 'path';
 import { readFileSync } from 'fs';
 import { spawnSync } from 'child_process';
+import glob from 'glob';
+import test from 'ava';
 
 const cli = join(process.cwd(), 'index.js');
 
