@@ -13,7 +13,7 @@ glob(join(__dirname, '/fixtures/*.nlf'), (err, files) => {
     let fileBase = basename(file, '.nlf');
 
     test(`NLF: ${basename(file)}`, t => {
-      const actual = JSON.parse(spawnSync(cli, ['--stdout', '--no-color', '--no-lines', file]).stdout.toString());
+      const actual = JSON.parse(spawnSync(cli, ['--stdout', '--no-lines', file]).stdout.toString());
 
 
       let jsonFile = join(fileDir, fileBase + '.json');
