@@ -1,11 +1,10 @@
-const meta = require('../package.json');
+import pkg from '../package.json';
 
 // Dependencies
-import * as chromafi from 'chromafi';
-import * as NLF from '@nsis/nlf';
-import * as program from 'commander';
-import * as symbols from 'log-symbols';
-import * as getStdin from 'get-stdin';
+import NLF from '@nsis/nlf';
+import program from 'commander';
+import symbols from 'log-symbols';
+import getStdin from 'get-stdin';
 import { readFile, writeFile } from 'fs';
 import { basename, extname, join } from 'path';
 import { promisify } from 'util';
@@ -16,7 +15,7 @@ const writa = promisify(writeFile);
 
 // Action
 program
-  .version(meta.version)
+  .version(pkg.version)
   .description('CLI tool to convert NSIS Language Files to JSON and vice versa')
   .arguments('[options] <file ...>')
   .usage('[options] <file ...>')
@@ -93,7 +92,6 @@ const printResult = (input, output, extension = 'json') => {
   let outputFile, outputPath;
 
   if (program.stdout) {
-    output = chromafi(output, { lineNumbers: program.lines });
     console.log(output);
   } else {
     outputFile = setOutName(input, `.${extension}`);
