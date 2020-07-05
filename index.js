@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+// eslint-disable-next-line
 const resolve = require('path').resolve;
 
 /*  The TypeScript compiler does not support she-bangs,
