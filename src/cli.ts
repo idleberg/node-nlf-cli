@@ -20,7 +20,7 @@ program
   .description('CLI tool to convert NSIS Language Files to JSON and vice versa')
   .arguments('[options] <file ...>')
   .usage('[options] <file ...>')
-  .option('-m, --minify', 'minify output JSON', true)
+  .option('-m, --minify', 'minify output JSON', false)
   .option('-l, --no-lines', 'suppress line-numbers in stdout', true)
   .option('-o, --output <dir>', 'set the output directory')
   .option('-s, --stdout', 'print result to stdout', false)
@@ -41,7 +41,7 @@ program
 const fileMode = program => {
   let contents, output;
 
-  program.args.forEach( async input => {
+  program.args.map( async input => {
     try {
       contents = await reada(input, 'utf8');
     } catch (err) {
