@@ -66,10 +66,10 @@ var version = "0.5.2";
 var description = "CLI tool to convert NSIS Language Files to JSON and vice versa";
 var license = "MIT";
 var scripts = {
-	build: "rollup --config rollup.config.js",
+	build: "rollup --config",
 	dev: "npm run start",
 	lint: "eslint ./src",
-	start: "rollup --watch --config rollup.config.js",
+	start: "rollup --watch --config",
 	test: "ava ./test/default.js --verbose"
 };
 var main = "index.js";
