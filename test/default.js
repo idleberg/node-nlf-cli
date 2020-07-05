@@ -7,12 +7,12 @@ import { spawn, spawnSync } from 'child_process';
 
 const cli = join(process.cwd(), 'index.js');
 
-glob(join(__dirname, '/fixtures/*.nlf'), async (err, files) => {
-  files.forEach( async file  => {
+glob(join(__dirname, '/fixtures/*.nlf'), (err, files) => {
+  files.map(file  => {
     let fileDir = dirname(file);
     let fileBase = basename(file, '.nlf');
 
-    test(`NLF: ${basename(file)}`, async t => {
+    test(`NLF: ${basename(file)}`, t => {
       const actual = JSON.parse(spawnSync(cli, ['--stdout', '--no-color', '--no-lines', file]).stdout.toString());
 
 
