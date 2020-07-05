@@ -5,9 +5,8 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 var program = _interopDefault(require('commander'));
 var symbols = _interopDefault(require('log-symbols'));
 var getStdin = _interopDefault(require('get-stdin'));
-var fs = require('fs');
+var fs = _interopDefault(require('fs'));
 var path = require('path');
-var util = require('util');
 
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation.
@@ -457,9 +456,6 @@ exports.stringify = stringify;
 
 var index = /*@__PURE__*/unwrapExports(dist);
 
-// Async functions
-var reada = util.promisify(fs.readFile);
-var writa = util.promisify(fs.writeFile);
 // Action
 program
     .version(pkg.version)
@@ -499,7 +495,7 @@ var fileMode = function (program) {
             switch (_a.label) {
                 case 0:
                     _a.trys.push([0, 2, , 3]);
-                    return [4 /*yield*/, reada(input, 'utf8')];
+                    return [4 /*yield*/, fs.promises.readFile(input, 'utf8')];
                 case 1:
                     contents = _a.sent();
                     return [3 /*break*/, 3];
@@ -562,7 +558,7 @@ var printResult = function (input, output, extension) {
     else {
         outputFile = setOutName(input, "." + extension);
         outputPath = (program.output) ? path.join(program.output, outputFile) : outputFile;
-        writa(outputPath, output);
+        fs.promises.writeFile(outputPath, output);
         console.log(symbols.success + " " + input + " \u2192 " + outputPath);
     }
 };

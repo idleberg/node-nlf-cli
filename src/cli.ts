@@ -5,13 +5,8 @@ import * as NLF from '@nsis/nlf';
 import program from 'commander';
 import symbols from 'log-symbols';
 import getStdin from 'get-stdin';
-import { readFile, writeFile } from 'fs';
+import fs from 'fs';
 import { basename, extname, join } from 'path';
-import { promisify } from 'util';
-
-// Async functions
-const reada = promisify(readFile);
-const writa = promisify(writeFile);
 
 // Action
 program
@@ -42,7 +37,7 @@ const fileMode = program => {
 
   program.args.map( async input => {
     try {
-      contents = await reada(input, 'utf8');
+      contents = await fs.promises.readFile(input, 'utf8');
     } catch (err) {
       console.warn(`${symbols.warning} ${input} not found`);
       return;
@@ -96,7 +91,7 @@ const printResult = (input, output, extension = 'json') => {
   } else {
     outputFile = setOutName(input, `.${extension}`);
     outputPath = (program.output) ? join(program.output, outputFile) : outputFile;
-    writa(outputPath, output);
+    fs.promises.writeFile(outputPath, output);
     console.log(`${symbols.success} ${input} → ${outputPath}`);
   }
 };
