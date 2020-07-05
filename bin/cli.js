@@ -86,7 +86,7 @@ var keywords = [
 	"converter"
 ];
 var dependencies = {
-	"@nsis/nlf": "^0.7.0",
+	"@nsis/nlf": "^0.7.1",
 	commander: "^5.1.0",
 	"get-stdin": "^8.0.0",
 	"log-symbols": "^4.0.0"
@@ -347,7 +347,7 @@ var parse = function (input, options) {
     var lines = input.split(/\r?\n/);
     // get NLF version
     var version = lines[0].match(/\d+$/)[0] || 6;
-    lines.forEach(function (line, index) {
+    lines.map(function (line, index) {
         var key = NLFStrings["v" + version][index];
         if (typeof key !== 'undefined' && key.startsWith('^')) {
             // Language String

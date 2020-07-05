@@ -24,7 +24,7 @@
     "converter"
   ],
   "dependencies": {
-    "@nsis/nlf": "^0.7.0",
+    "@nsis/nlf": "^0.7.1",
     "commander": "^5.1.0",
     "get-stdin": "^8.0.0",
     "log-symbols": "^4.0.0"
