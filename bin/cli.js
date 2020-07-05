@@ -99,8 +99,9 @@ var devDependencies = {
 	"@types/node": "^14.0.14",
 	"@typescript-eslint/eslint-plugin": "^3.5.0",
 	"@typescript-eslint/parser": "^3.5.0",
-	ava: "^2.4.0",
+	ava: "^3.9.0",
 	eslint: "^7.4.0",
+	esm: "^3.2.25",
 	glob: "^7.1.6",
 	husky: "^4.2.5",
 	rollup: "^2.19.0",
@@ -110,6 +111,11 @@ var husky = {
 	hooks: {
 		"pre-commit": "npm run lint"
 	}
+};
+var ava = {
+	require: [
+		"esm"
+	]
 };
 var pkg = {
 	name: name,
@@ -123,7 +129,8 @@ var pkg = {
 	keywords: keywords,
 	dependencies: dependencies,
 	devDependencies: devDependencies,
-	husky: husky
+	husky: husky,
+	ava: ava
 };
 
 function unwrapExports (x) {
