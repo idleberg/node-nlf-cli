@@ -11,6 +11,7 @@ types/
 gulpfile.js
 tsconfig.json
 tslint.json
+yarn.lock
 
 # project specific
 *.exe
