@@ -67,7 +67,7 @@ function __generator(thisArg, body) {
 }
 
 var name = "@nsis/nlf-cli";
-var version = "0.6.0";
+var version = "0.6.1";
 var description = "CLI tool to convert NSIS Language Files to JSON and vice versa";
 var license = "MIT";
 var scripts = {
@@ -91,25 +91,25 @@ var keywords = [
 	"converter"
 ];
 var dependencies = {
-	"@nsis/nlf": "^0.8.1",
-	commander: "^6.2.0",
+	"@nsis/nlf": "^0.9.0",
+	commander: "^7.0.0",
 	"get-stdin": "^8.0.0",
 	"log-symbols": "^4.0.0"
 };
 var devDependencies = {
-	"@rollup/plugin-commonjs": "^16.0.0",
+	"@rollup/plugin-commonjs": "^17.0.0",
 	"@rollup/plugin-json": "^4.1.0",
-	"@rollup/plugin-typescript": "^6.1.0",
-	"@types/node": "^14.0.14",
-	"@typescript-eslint/eslint-plugin": "^4.6.1",
-	"@typescript-eslint/parser": "^4.6.1",
-	ava: "^3.9.0",
-	eslint: "^7.4.0",
+	"@rollup/plugin-typescript": "^8.1.0",
+	"@types/node": "^14.14.22",
+	"@typescript-eslint/eslint-plugin": "^4.14.1",
+	"@typescript-eslint/parser": "^4.14.1",
+	ava: "^3.15.0",
+	eslint: "^7.18.0",
 	esm: "^3.2.25",
 	glob: "^7.1.6",
-	husky: "^4.2.5",
-	rollup: "^2.19.0",
-	typescript: "^4.0.5"
+	husky: "^4.3.8",
+	rollup: "^2.38.0",
+	typescript: "^4.1.3"
 };
 var husky = {
 	hooks: {
@@ -136,6 +136,10 @@ var pkg = {
 	husky: husky,
 	ava: ava
 };
+
+function getDefaultExportFromCjs (x) {
+	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
+}
 
 function createCommonjsModule(fn, basedir, module) {
 	return module = {
@@ -1729,11 +1733,20 @@ var NLFStrings = {
 };
 
 /**
+ * Get version from input string
+ * @param input
+ */
+function getVersion(input) {
+    var _a, _b;
+    var groups = (_a = input.match(/(?<version>\d+)$/)) === null || _a === void 0 ? void 0 : _a.groups;
+    return ((_b = groups === null || groups === void 0 ? void 0 : groups.version) === null || _b === void 0 ? void 0 : _b.length) ? groups === null || groups === void 0 ? void 0 : groups.version : '6';
+}
+/**
  * Parses an NSIS language file string
  * @param input - NLF string
  * @returns - NLF object
  */
-var parse = function (input, options) {
+function parse(input, options) {
     if (options === void 0) { options = {}; }
     var output = {
         header: '',
@@ -1751,7 +1764,7 @@ var parse = function (input, options) {
     // split into lines
     var lines = input.split(/\r?\n/);
     // get NLF version
-    var version = lines[0].match(/\d+$/)[0] || 6;
+    var version = getVersion(lines[0]);
     lines.map(function (line, index) {
         var key = NLFStrings["v" + version][index];
         if (typeof key !== 'undefined' && key.startsWith('^')) {
@@ -1799,21 +1812,21 @@ var parse = function (input, options) {
         return JSON.stringify(output, null, indentation);
     }
     return output;
-};
+}
 /**
  * Stringifies an NSIS language file object
  * @param input - NLF object
  * @returns - NLF string
  */
-var stringify = function (input) {
+function stringify(input) {
     var output = [];
     var inputObj = typeof input === 'string'
         ? JSON5__default['default'].parse(input)
         : input;
     // get NLF version
-    var version = inputObj.header.match(/\d+$/)[0] || 6;
+    var version = getVersion(inputObj.header);
     output.push('# Header, don\'t edit', inputObj.header);
-    output.push('# Language ID', inputObj.id);
+    output.push('# Language ID', String(inputObj.id));
     if (typeof inputObj.font !== 'undefined' && NLFStrings["v" + version].includes('fontname')) {
         output.push("# Font and size - dash (-) means default");
         if (inputObj.font.name) {
@@ -1853,11 +1866,13 @@ var stringify = function (input) {
         }
     }
     return output.join('\n');
-};
+}
 
 exports.parse = parse;
 exports.stringify = stringify;
 });
+
+var NLF = /*@__PURE__*/getDefaultExportFromCjs(dist);
 
 // Action
 program__default['default']
@@ -1870,6 +1885,7 @@ program__default['default']
     .option('-o, --output <dir>', 'set the output directory')
     .option('-s, --stdout', 'print result to stdout', false)
     .parse(process.argv);
+var options = program__default['default'].opts();
 (function () { return __awaiter(void 0, void 0, void 0, function () {
     var stdIn;
     return __generator(this, function (_a) {
@@ -1878,10 +1894,10 @@ program__default['default']
             case 1:
                 stdIn = _a.sent();
                 if (program__default['default'].args.length > 0) {
-                    fileMode(program__default['default']);
+                    fileMode(program__default['default'].args, options);
                 }
                 else if (stdIn.length > 0) {
-                    streamMode(stdIn);
+                    streamMode(stdIn, options);
                 }
                 else {
                     program__default['default'].help();
@@ -1890,9 +1906,10 @@ program__default['default']
         }
     });
 }); })();
-var fileMode = function (program) {
+function fileMode(args, options) {
+    var _this = this;
     var contents, output;
-    program.args.map(function (input) { return __awaiter(void 0, void 0, void 0, function () {
+    args.map(function (input) { return __awaiter(_this, void 0, void 0, function () {
         var err_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
@@ -1909,7 +1926,7 @@ var fileMode = function (program) {
                 case 3:
                     if (input.endsWith('.nlf')) {
                         try {
-                            output = dist.parse(contents, { stringify: true, minify: program.minify });
+                            output = NLF.parse(contents, { stringify: true, minify: options.minify });
                             printResult(input, output, 'json');
                         }
                         catch (err) {
@@ -1918,7 +1935,7 @@ var fileMode = function (program) {
                     }
                     else if (input.endsWith('.json')) {
                         try {
-                            output = dist.stringify(contents);
+                            output = NLF.stringify(contents);
                             printResult(input, output, 'nlf');
                         }
                         catch (err) {
@@ -1932,39 +1949,37 @@ var fileMode = function (program) {
             }
         });
     }); });
-};
-var streamMode = function (input) {
+}
+function streamMode(input, options) {
     var output;
-    program__default['default'].stdout = true;
-    program__default['default'].lines = false;
     try {
         JSON.parse(input);
-        output = dist.stringify(input);
+        output = NLF.stringify(input);
         printResult(input, output);
     }
     catch (err) {
         if (err instanceof SyntaxError) {
-            output = dist.parse(input, { stringify: true, minify: program__default['default'].minify });
+            output = NLF.parse(input, { stringify: true, minify: options.minify });
             printResult(input, output);
         }
         else {
             console.error(err);
         }
     }
-};
-var printResult = function (input, output, extension) {
+}
+function printResult(input, output, extension) {
     if (extension === void 0) { extension = 'json'; }
     var outputFile, outputPath;
-    if (program__default['default'].stdout) {
+    if (options.stdout) {
         console.log(output);
     }
     else {
         outputFile = setOutName(input, "." + extension);
-        outputPath = (program__default['default'].output) ? path.join(program__default['default'].output, outputFile) : outputFile;
+        outputPath = (options.output) ? path.join(options.output, outputFile) : outputFile;
         fs__default['default'].promises.writeFile(outputPath, output);
         console.log(symbols__default['default'].success + " " + input + " \u2192 " + outputPath);
     }
-};
-var setOutName = function (file, extName) {
+}
+function setOutName(file, extName) {
     return path.basename(file, path.extname(file)) + extName;
-};
+}
