@@ -73,7 +73,11 @@ var license = "MIT";
 var scripts = {
 	build: "rollup --config",
 	dev: "npm run start",
-	lint: "eslint ./src",
+	fix: "eslint --fix ./src",
+	"lint:json": "jsonlint --quiet ./*.json",
+	"lint:md": "remark . --quiet --frail --ignore-path .gitignore",
+	"lint:ts": "eslint ./src --ignore-path .gitignore",
+	lint: "npm-run-all --parallel lint:*",
 	start: "rollup --watch --config",
 	test: "ava ./test/default.js --verbose"
 };
@@ -108,18 +112,24 @@ var devDependencies = {
 	esm: "^3.2.25",
 	glob: "^7.1.6",
 	husky: "^4.3.8",
+	jsonlint: "^1.6.3",
+	"npm-run-all": "^4.1.5",
+	prettier: "^2.2.1",
+	"remark-cli": "^9.0.0",
+	"remark-preset-lint-recommended": "^5.0.0",
+	"remark-preset-prettier": "^0.4.0",
 	rollup: "^2.38.0",
 	typescript: "^4.1.3"
-};
-var husky = {
-	hooks: {
-		"pre-commit": "npm run lint"
-	}
 };
 var ava = {
 	require: [
 		"esm"
 	]
+};
+var husky = {
+	hooks: {
+		"pre-commit": "lint-staged"
+	}
 };
 var pkg = {
 	name: name,
@@ -133,27 +143,14 @@ var pkg = {
 	keywords: keywords,
 	dependencies: dependencies,
 	devDependencies: devDependencies,
+	ava: ava,
 	husky: husky,
-	ava: ava
+	"lint-staged": {
+	"*.ts": "eslint --cache --fix",
+	"*.json": "jsonlint --quiet",
+	"*.md": "prettier --write"
+}
 };
-
-function getDefaultExportFromCjs (x) {
-	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
-}
-
-function createCommonjsModule(fn, basedir, module) {
-	return module = {
-		path: basedir,
-		exports: {},
-		require: function (path, base) {
-			return commonjsRequire(path, (base === undefined || base === null) ? module.path : base);
-		}
-	}, fn(module, module.exports), module.exports;
-}
-
-function commonjsRequire () {
-	throw new Error('Dynamic requires are not currently supported by @rollup/plugin-commonjs');
-}
 
 // This is a generated file. Do not edit.
 var Space_Separator = /[\u1680\u2000-\u200A\u202F\u205F\u3000]/;
@@ -1553,15 +1550,9 @@ const JSON5 = {
 
 var lib = JSON5;
 
-var dist = createCommonjsModule(function (module, exports) {
+function _interopDefaultLegacy$1 (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
-Object.defineProperty(exports, '__esModule', { value: true });
-
-
-
-function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
-
-var JSON5__default = /*#__PURE__*/_interopDefaultLegacy(lib);
+var JSON5__default = /*#__PURE__*/_interopDefaultLegacy$1(lib);
 
 var NLFStrings = {
     /**
@@ -1746,7 +1737,7 @@ function getVersion(input) {
  * @param input - NLF string
  * @returns - NLF object
  */
-function parse(input, options) {
+function parse$1(input, options) {
     if (options === void 0) { options = {}; }
     var output = {
         header: '',
@@ -1818,7 +1809,7 @@ function parse(input, options) {
  * @param input - NLF object
  * @returns - NLF string
  */
-function stringify(input) {
+function stringify$1(input) {
     var output = [];
     var inputObj = typeof input === 'string'
         ? JSON5__default['default'].parse(input)
@@ -1868,11 +1859,13 @@ function stringify(input) {
     return output.join('\n');
 }
 
-exports.parse = parse;
-exports.stringify = stringify;
-});
+var parse_1 = parse$1;
+var stringify_1 = stringify$1;
 
-var NLF = /*@__PURE__*/getDefaultExportFromCjs(dist);
+var dist = /*#__PURE__*/Object.defineProperty({
+	parse: parse_1,
+	stringify: stringify_1
+}, '__esModule', {value: true});
 
 // Action
 program__default['default']
@@ -1910,7 +1903,6 @@ function fileMode(args, options) {
     var _this = this;
     var contents, output;
     args.map(function (input) { return __awaiter(_this, void 0, void 0, function () {
-        var err_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -1920,13 +1912,13 @@ function fileMode(args, options) {
                     contents = _a.sent();
                     return [3 /*break*/, 3];
                 case 2:
-                    err_1 = _a.sent();
+                    _a.sent();
                     console.warn(symbols__default['default'].warning + " " + input + " not found");
                     return [2 /*return*/];
                 case 3:
                     if (input.endsWith('.nlf')) {
                         try {
-                            output = NLF.parse(contents, { stringify: true, minify: options.minify });
+                            output = dist.parse(contents, { stringify: true, minify: options.minify });
                             printResult(input, output, 'json');
                         }
                         catch (err) {
@@ -1935,7 +1927,7 @@ function fileMode(args, options) {
                     }
                     else if (input.endsWith('.json')) {
                         try {
-                            output = NLF.stringify(contents);
+                            output = dist.stringify(contents);
                             printResult(input, output, 'nlf');
                         }
                         catch (err) {
@@ -1954,12 +1946,12 @@ function streamMode(input, options) {
     var output;
     try {
         JSON.parse(input);
-        output = NLF.stringify(input);
+        output = dist.stringify(input);
         printResult(input, output);
     }
     catch (err) {
         if (err instanceof SyntaxError) {
-            output = NLF.parse(input, { stringify: true, minify: options.minify });
+            output = dist.parse(input, { stringify: true, minify: options.minify });
             printResult(input, output);
         }
         else {
