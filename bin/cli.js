@@ -113,6 +113,7 @@ var devDependencies = {
 	glob: "^7.1.6",
 	husky: "^4.3.8",
 	jsonlint: "^1.6.3",
+	"lint-staged": "^10.5.3",
 	"npm-run-all": "^4.1.5",
 	prettier: "^2.2.1",
 	"remark-cli": "^9.0.0",
