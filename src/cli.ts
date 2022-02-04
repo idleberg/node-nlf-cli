@@ -1,16 +1,16 @@
-import pkg from '../package.json';
-
 // Dependencies
 import { basename, extname, join } from 'path';
 import NLF from '@nsis/nlf';
-import fs from 'fs';
 import getStdin from 'get-stdin';
 import program from 'commander';
 import symbols from 'log-symbols';
+import { promises as fs } from 'node:fs';
+
+const { version } = JSON.parse(await fs.readFile('./package.json', 'utf8'));
 
 // Action
 program
-  .version(pkg.version)
+  .version(version)
   .description('CLI tool to convert NSIS Language Files to JSON and vice versa')
   .arguments('[options] <file ...>')
   .usage('[options] <file ...>')
@@ -26,20 +26,20 @@ program
   const stdIn = await getStdin();
 
   if (program.args.length > 0) {
-    fileMode(program.args, options);
+    await fileMode(program.args, options);
   } else if (stdIn.length > 0) {
-    streamMode(stdIn, options);
+    await streamMode(stdIn, options);
   } else {
     program.help();
   }
 })();
 
-function fileMode(args, options) {
+async function fileMode(args, options) {
   let contents, output;
 
-  args.map(async (input) => {
+  args.map(async (input: string) => {
     try {
-      contents = await fs.promises.readFile(input, 'utf8');
+      contents = await fs.readFile(input, 'utf8');
     } catch (err) {
       console.warn(`${symbols.warning} ${input} not found`);
       return;
@@ -48,14 +48,14 @@ function fileMode(args, options) {
     if (input.endsWith('.nlf')) {
       try {
         output = NLF.parse(contents, { stringify: true, minify: options.minify });
-        printResult(input, output, 'json');
+        await printResult(input, output, 'json');
       } catch (err) {
         console.error(`${symbols.error} ${input} failed`);
       }
     } else if (input.endsWith('.json')) {
       try {
         output = NLF.stringify(contents);
-        printResult(input, output, 'nlf');
+        await printResult(input, output, 'nlf');
       } catch (err) {
         console.error(`${symbols.error} ${input} failed`);
       }
@@ -65,24 +65,24 @@ function fileMode(args, options) {
   });
 }
 
-function streamMode(input, options) {
+async function streamMode(input, options) {
   let output;
 
   try {
     JSON.parse(input);
     output = NLF.stringify(input);
-    printResult(input, output);
+    await printResult(input, output);
   } catch (err) {
     if (err instanceof SyntaxError) {
       output = NLF.parse(input, { stringify: true, minify: options.minify });
-      printResult(input, output);
+      await printResult(input, output);
     } else {
       console.error(err);
     }
   }
 }
 
-function printResult(input, output, extension = 'json') {
+function printResult(input: string, output: string, extension = 'json') {
   let outputFile, outputPath;
 
   if (options.stdout) {
@@ -90,7 +90,7 @@ function printResult(input, output, extension = 'json') {
   } else {
     outputFile = setOutName(input, `.${extension}`);
     outputPath = (options.output) ? join(options.output, outputFile) : outputFile;
-    fs.promises.writeFile(outputPath, output);
+    fs.writeFile(outputPath, output);
     console.log(`${symbols.success} ${input} → ${outputPath}`);
   }
 }
