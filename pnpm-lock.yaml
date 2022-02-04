@@ -12,7 +12,6 @@ specifiers:
   commander: ^7.2.0
   eslint: ^8.8.0
   eslint-plugin-json: ^3.1.0
-  esm: ^3.2.25
   get-stdin: ^8.0.0
   glob: ^7.2.0
   husky: ^7.0.0
@@ -24,6 +23,7 @@ specifiers:
   remark-preset-lint-recommended: ^6.1.2
   remark-preset-prettier: ^1.0.0
   rollup: ^2.67.0
+  tslib: ^2.3.1
   typescript: ^4.5.5
 
 dependencies:
@@ -35,14 +35,13 @@ dependencies:
 devDependencies:
   '@rollup/plugin-commonjs': 21.0.1_rollup@2.67.0
   '@rollup/plugin-json': 4.1.0_rollup@2.67.0
-  '@rollup/plugin-typescript': 8.3.0_rollup@2.67.0+typescript@4.5.5
+  '@rollup/plugin-typescript': 8.3.0_410d604340de00b26a012021c86f6e9f
   '@types/node': 16.11.22
   '@typescript-eslint/eslint-plugin': 5.10.2_2595c2126aec4d4b6e944b931dabb4c2
   '@typescript-eslint/parser': 5.10.2_eslint@8.8.0+typescript@4.5.5
   ava: 4.0.1
   eslint: 8.8.0
   eslint-plugin-json: 3.1.0
-  esm: 3.2.25
   glob: 7.2.0
   husky: 7.0.4
   lint-staged: 12.3.3
@@ -52,6 +51,7 @@ devDependencies:
   remark-preset-lint-recommended: 6.1.2
   remark-preset-prettier: 1.0.0_prettier@2.5.1
   rollup: 2.67.0
+  tslib: 2.3.1
   typescript: 4.5.5
 
 packages:
@@ -162,7 +162,7 @@ packages:
       rollup: 2.67.0
     dev: true
 
-  /@rollup/plugin-typescript/8.3.0_rollup@2.67.0+typescript@4.5.5:
+  /@rollup/plugin-typescript/8.3.0_410d604340de00b26a012021c86f6e9f:
     resolution: {integrity: sha512-I5FpSvLbtAdwJ+naznv+B4sjXZUcIvLLceYpITAn7wAP8W0wqc5noLdGIp9HGVntNhRWXctwPYrSSFQxtl0FPA==}
     engines: {node: '>=8.0.0'}
     peerDependencies:
@@ -173,6 +173,7 @@ packages:
       '@rollup/pluginutils': 3.1.0_rollup@2.67.0
       resolve: 1.22.0
       rollup: 2.67.0
+      tslib: 2.3.1
       typescript: 4.5.5
     dev: true
 
@@ -1117,11 +1118,6 @@ packages:
       v8-compile-cache: 2.3.0
     transitivePeerDependencies:
       - supports-color
-    dev: true
-
-  /esm/3.2.25:
-    resolution: {integrity: sha512-U1suiZ2oDVWv4zPO56S0NcR5QriEahGtdN2OR6FiOG4WJvcjBVFB0qI4+eKoWFH483PKGuLuu6V8Z4T5g63UVA==}
-    engines: {node: '>=6'}
     dev: true
 
   /espree/9.3.0:
