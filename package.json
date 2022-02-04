@@ -40,8 +40,9 @@
   "dependencies": {
     "@nsis/nlf": "^0.10.0",
     "commander": "^7.2.0",
-    "get-stdin": "^8.0.0",
-    "log-symbols": "^4.1.0"
+    "get-stdin": "^9.0.0 ",
+    "log-symbols": "^4.1.0",
+    "update-notifier": "5.1.0"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^21.0.1",
