@@ -12,12 +12,22 @@
     "lint:ts": "eslint ./src --ignore-path .gitignore",
     "lint": "npm-run-all --parallel lint:*",
     "start": "rollup --watch --config",
-    "test": "ava ./test/default.js --verbose",
+    "test": "ava ./test/default.mjs --verbose",
     "prepare": "husky install"
   },
-  "main": "index.js",
+  "files": [
+    "bin/",
+    "types/",
+    "LICENSE",
+    "README.md"
+  ],
   "bin": {
-    "nlf": "index.js"
+    "nlf": "index.mjs"
+  },
+  "type": "module",
+  "typings": "types/",
+  "engines": {
+    "node": "^14.13.1 || >=16.0.0"
   },
   "repository": {
     "type": "git",
@@ -53,6 +63,7 @@
     "remark-preset-lint-recommended": "^6.1.2",
     "remark-preset-prettier": "^1.0.0",
     "rollup": "^2.67.0",
+    "tslib": "^2.3.1",
     "typescript": "^4.5.5"
   },
   "lint-staged": {
