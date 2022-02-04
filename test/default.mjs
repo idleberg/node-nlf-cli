@@ -1,19 +1,20 @@
 // Dependencies
-import { basename, dirname, join } from 'path';
-import { readFileSync } from 'fs';
-import { spawnSync } from 'child_process';
+import { basename, dirname, join, resolve } from 'node:path';
+import { readFileSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
 import glob from 'glob';
 import test from 'ava';
 
-const cli = join(process.cwd(), 'index.js');
+const __dirname = resolve(dirname(''));
+const cli = resolve(__dirname, 'index.mjs');
 
-glob(join(__dirname, '/fixtures/*.nlf'), (err, files) => {
+glob(resolve(__dirname, 'test/fixtures/*.nlf'), (err, files) => {
   files.map(file  => {
     let fileDir = dirname(file);
     let fileBase = basename(file, '.nlf');
 
     test(`NLF: ${basename(file)}`, t => {
-      const actual = JSON.parse(spawnSync(cli, ['--stdout', '--no-lines', file]).stdout.toString());
+      const actual = JSON.parse(spawnSync('node', [cli, '--stdout', '--no-lines', file]).stdout.toString());
 
       let jsonFile = join(fileDir, fileBase + '.json');
       let expected = JSON.parse(readFileSync(jsonFile, 'utf8'));

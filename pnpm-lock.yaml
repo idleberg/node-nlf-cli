@@ -1,7 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
-  '@nsis/nlf': ^0.10.0
+  '@nsis/nlf': ^0.10.1
   '@rollup/plugin-commonjs': ^21.0.1
   '@rollup/plugin-json': ^4.1.0
   '@rollup/plugin-typescript': ^8.3.0
@@ -12,9 +12,9 @@ specifiers:
   commander: ^7.2.0
   eslint: ^8.8.0
   eslint-plugin-json: ^3.1.0
-  get-stdin: '^9.0.0 '
+  get-stdin: ^9.0.0
   glob: ^7.2.0
-  husky: ^7.0.0
+  husky: ^7.0.4
   lint-staged: ^12.3.3
   log-symbols: ^4.1.0
   npm-run-all: ^4.1.5
@@ -28,7 +28,7 @@ specifiers:
   update-notifier: 5.1.0
 
 dependencies:
-  '@nsis/nlf': link:node_modules/@nsis/nlf
+  '@nsis/nlf': 0.10.1
   commander: 7.2.0
   get-stdin: 9.0.0
   log-symbols: 4.1.0
@@ -131,6 +131,13 @@ packages:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.13.0
     dev: true
+
+  /@nsis/nlf/0.10.1:
+    resolution: {integrity: sha512-4i5s5D+wikACrheXz7HEzF9IpA44lb3q33NrCRx1CF+Ab/pDj4lw64iU86S/jIrFceuPIF6PMPdC0c50uhomuA==}
+    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+    dependencies:
+      json5: 2.2.0
+    dev: false
 
   /@rollup/plugin-commonjs/21.0.1_rollup@2.67.0:
     resolution: {integrity: sha512-EA+g22lbNJ8p5kuZJUYyhhDK7WgJckW5g4pNN7n4mAFUM96VuwUnNT3xr2Db2iCZPI1pJPbGyfT5mS9T1dHfMg==}
@@ -1936,7 +1943,6 @@ packages:
     hasBin: true
     dependencies:
       minimist: 1.2.5
-    dev: true
 
   /jsonc-parser/3.0.0:
     resolution: {integrity: sha512-fQzRfAbIBnR0IQvftw9FJveWiHp72Fg20giDrHz6TdfB12UH/uue0D3hm57UB5KgAVuniLMCaS8P1IMj9NR7cA==}
