@@ -1,5 +1,5 @@
 import { basename, extname, join } from 'path';
-import NLF from '@nsis/nlf';
+import * as NLF from '@nsis/nlf';
 import getStdin from 'get-stdin';
 import program from 'commander';
 import symbols from 'log-symbols';
