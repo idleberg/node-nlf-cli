@@ -1,6 +1,6 @@
 // Dependencies
 import { basename, extname, join } from 'path';
-import NLF from '@nsis/nlf';
+import * as NLF from '@nsis/nlf';
 import getStdin from 'get-stdin';
 import program from 'commander';
 import symbols from 'log-symbols';
@@ -20,7 +20,7 @@ program
   .option('-s, --stdout', 'print result to stdout', false)
   .parse(process.argv);
 
-  const options: NLF.ProgramOptioms = program.opts();
+  const options = program.opts();
 
 (async () => {
   const stdIn = await getStdin();
