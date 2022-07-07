@@ -2,6 +2,7 @@
 .circleci/
 .editorconfig
 src/
+dist/
 test/
 
 # Files
