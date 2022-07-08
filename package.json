@@ -17,6 +17,7 @@
     "test": "ava ./test/default.mjs --verbose --timeout 1m"
   },
   "files": [
+    "bin/",
     "types/",
     "LICENSE",
     "README.md"
