@@ -7,7 +7,6 @@ package-lock.json
 yarn-error.log
 yarn.lock
 shrinkwrap.yaml
-bin/
 
 # development
 .eslintcache
