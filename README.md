@@ -16,10 +16,10 @@ You can now use the `nlf` command to convert language files:
 
 ```sh
 # Standard usage
-nlf Contrib/Language\ files/English.nlf
+nlf "Contrib/Language files/English.nlf"
 
 # Alternatively, use stdin
-cat Contrib/Language\ files/English.nlf | nlf
+cat "Contrib/Language files/English.nlf" | nlf
 ```
 
 ### Options
