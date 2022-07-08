@@ -14,7 +14,7 @@
     "prepack": "npm run build",
     "release": "np --no-yarn",
     "start": "rollup --watch --config",
-    "test": "ava ./test/default.mjs --verbose"
+    "test": "ava ./test/default.mjs --verbose --timeout 1m"
   },
   "files": [
     "types/",
