@@ -1,5 +1,5 @@
 // Dependencies
-import { basename, extname, join } from 'path';
+import { basename, extname, join } from 'node:path';
 import * as NLF from '@nsis/nlf';
 import getStdin from 'get-stdin';
 import program from 'commander';
