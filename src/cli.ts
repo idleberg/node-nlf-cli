@@ -1,12 +1,18 @@
 // Dependencies
-import { basename, extname, join } from 'node:path';
+import { basename, dirname, extname, join, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url'
+import { promises as fs } from 'node:fs';
 import * as NLF from '@nsis/nlf';
 import getStdin from 'get-stdin';
 import program from 'commander';
 import symbols from 'log-symbols';
-import { promises as fs } from 'node:fs';
 
-const { version } = JSON.parse(await fs.readFile('./package.json', 'utf8'));
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const { version } = JSON.parse(
+  await fs.readFile(resolve(__dirname, '../package.json'), 'utf8')
+);
 
 // Action
 program

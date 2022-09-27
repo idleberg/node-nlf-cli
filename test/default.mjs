@@ -2,13 +2,15 @@
 import { basename, dirname, join, resolve } from 'node:path';
 import { readFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
-import glob from 'glob';
+import { globby } from 'globby';
 import test from 'ava';
 
 const __dirname = resolve(dirname(''));
 const cli = resolve(__dirname, 'index.mjs');
 
-glob(resolve(__dirname, 'test/fixtures/*.nlf'), (err, files) => {
+(async () => {
+  const files = await globby(resolve(__dirname, 'test/fixtures/*.nlf'));
+
   files.map(file  => {
     let fileDir = dirname(file);
     let fileBase = basename(file, '.nlf');
@@ -22,4 +24,4 @@ glob(resolve(__dirname, 'test/fixtures/*.nlf'), (err, files) => {
       t.deepEqual(actual, expected);
     });
   });
-});
+})();
