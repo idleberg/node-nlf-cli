@@ -20,7 +20,7 @@ program
   .option('-s, --stdout', 'print result to stdout', false)
   .parse(process.argv);
 
-  const options = program.opts();
+const options = program.opts();
 
 (async () => {
   const stdIn = await getStdin();
