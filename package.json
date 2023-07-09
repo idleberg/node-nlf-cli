@@ -14,7 +14,7 @@
     "prepack": "npm run build",
     "release": "np --no-yarn",
     "start": "rollup --watch --config",
-    "test": "ava ./tests/default.mjs --verbose --timeout 1m"
+    "test": "uvu tests"
   },
   "files": [
     "bin/",
