@@ -1,8 +1,8 @@
 # nlf-cli
 
-[![npm](https://flat.badgen.net/npm/license/@nsis/nlf-cli)](https://www.npmjs.org/package/@nsis/nlf-cli)
-[![npm](https://flat.badgen.net/npm/v/@nsis/nlf-cli)](https://www.npmjs.org/package/@nsis/nlf-cli)
-[![CI](https://img.shields.io/github/actions/workflow/status/idleberg/node-nlf-cli/default.yml?style=flat-square)](https://github.com/idleberg/node-nlf-cli/actions)
+[![License](https://img.shields.io/github/license/idleberg/node-nlf-cli?color=blue&style=for-the-badge)](https://github.com/idleberg/node-nlf-cli/blob/main/LICENSE)
+[![Version](https://img.shields.io/npm/v/@nsis/nlf-cli?style=for-the-badge)](https://www.npmjs.org/package/@nsis/nlf-cli)
+[![Build](https://img.shields.io/github/actions/workflow/status/idleberg/node-nlf-cli/default.yml?style=for-the-badge)](https://github.com/idleberg/node-nlf-cli/actions)
 
 CLI tool to convert NSIS Language Files to JSON and vice versa
 
