@@ -14,7 +14,7 @@
     "prepack": "npm run build",
     "release": "np --no-yarn --any-branch",
     "start": "rollup --watch --config",
-    "test": "uvu -r tsm tests"
+    "test": "uvu tests"
   },
   "files": [
     "bin/",
