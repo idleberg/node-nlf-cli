@@ -19,6 +19,18 @@ files.map(file => {
 
     assert.equal(actual, expected);
   });
+
+  test(`NLF: ${basename(file)} (CRLF)`, () => {
+		const actual = spawnSync('node', [cli, '--stdout', '--no-lines', '--eol crlf', file]).stdout.toString();
+
+		assert.is(actual.split('\r\n').length, actual.split('\n').length);
+  });
+
+  test(`NLF: ${basename(file)} (LF)`, () => {
+		const actual = spawnSync('node', [cli, '--stdout', '--no-lines', '--eol lf', file]).stdout.toString();
+
+		assert.equal(actual.split('\r\n'), [actual]);
+  });
 });
 
 test.run();
