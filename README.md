@@ -36,6 +36,7 @@ Running `nlf --help` list available flags
 
 ```
 --version    output the version number
+--eol        select end of line sequence
 --minify     minify output JSON
 --output     set the output directory
 --stdout     print result to stdout

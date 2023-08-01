@@ -1,10 +1,10 @@
 // Dependencies
 import { basename, dirname, extname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url'
+import { program } from 'commander';
 import { promises as fs } from 'node:fs';
 import * as NLF from '@nsis/nlf';
 import getStdin from 'get-stdin';
-import program from 'commander';
 import symbols from 'log-symbols';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -20,6 +20,7 @@ program
   .description('CLI tool to convert NSIS Language Files to JSON and vice versa')
   .arguments('[options] <file ...>')
   .usage('[options] <file ...>')
+  .option('-e, --eol', 'select end of line sequence', false)
   .option('-m, --minify', 'minify output JSON', false)
   .option('-l, --no-lines', 'suppress line-numbers in stdout', true)
   .option('-o, --output <dir>', 'set the output directory')
