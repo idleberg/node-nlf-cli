@@ -11,12 +11,11 @@ const files = await globby(resolve(process.cwd(), 'tests/fixtures/*.nlf'));
 files.map(file => {
   let fileDir = dirname(file);
   let fileBase = basename(file, '.nlf');
+	let jsonFile = join(fileDir, fileBase + '.json');
 
   test(`NLF: ${basename(file)}`, () => {
-    const actual = JSON.parse(spawnSync('node', [cli, '--stdout', '--no-lines', file]).stdout.toString());
-
-    let jsonFile = join(fileDir, fileBase + '.json');
-    let expected = JSON.parse(readFileSync(jsonFile, 'utf8'));
+		const actual = JSON.parse(spawnSync('node', [cli, '--stdout', '--no-lines', file]).stdout.toString());
+    const expected = JSON.parse(readFileSync(jsonFile, 'utf8'));
 
     assert.equal(actual, expected);
   });
