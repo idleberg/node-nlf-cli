@@ -1,6 +1,6 @@
 {
   "name": "@nsis/nlf-cli",
-  "version": "0.8.4",
+  "version": "0.9.0",
   "description": "CLI tool to convert NSIS Language Files to JSON and vice versa",
   "license": "MIT",
   "scripts": {
