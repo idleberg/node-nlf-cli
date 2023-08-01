@@ -18,9 +18,9 @@ const { version } = JSON.parse(
 program
   .version(version)
   .description('CLI tool to convert NSIS Language Files to JSON and vice versa')
-  .arguments('[options] <file ...>')
-  .usage('[options] <file ...>')
-  .option('-e, --eol', 'select end of line sequence', false)
+  .arguments('<file...>')
+  .usage('[options] <file...>')
+  .option('-e, --eol <"crlf"|"lf">', 'select end of line sequence', value => ['crlf', 'lf'].includes(value), undefined)
   .option('-m, --minify', 'minify output JSON', false)
   .option('-l, --no-lines', 'suppress line-numbers in stdout', true)
   .option('-o, --output <dir>', 'set the output directory')
