@@ -9,6 +9,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:json/recommended'
   ],
+	ignorePatterns: ['node_modules/**', 'bin/*'],
   overrides: [
     {
       files: ["tsconfig.json"],
