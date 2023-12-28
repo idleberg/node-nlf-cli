@@ -3,7 +3,7 @@
 import { dirname, resolve } from 'node:path';
 import { promises as fs } from 'node:fs';
 import updateNotifier from 'update-notifier';
-import './bin/cli.mjs';
+import './bin/cli.js';
 
 (async () => {
   const __filename = fileURLToPath(import.meta.url);
