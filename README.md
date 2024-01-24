@@ -46,7 +46,7 @@ Running `nlf --help` list available flags
 ## Related
 
 - [nlf](https://www.npmjs.org/package/@nsis/nlf) - library to convert NLF files
-- [vite-plugin-nlf](https://www.npmjs.org/package/@nsis/vite-plugin-nlf) - Vite plugin for NLF files
+- [vite-plugin-nlf](https://www.npmjs.org/package/@nsis/vite-plugin-nlf) - Vite plugin to load NSIS language files
 
 ## License
 
