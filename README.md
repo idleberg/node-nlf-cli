@@ -9,7 +9,7 @@ CLI tool to convert NSIS Language Files to JSON and vice versa
 ## Installation
 
 ```sh
-npm install --global @nsis/nlf-cli`
+npm install --global @nsis/nlf-cli
 ```
 
 Alternatively, you can use it without installation
