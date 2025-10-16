@@ -13,7 +13,7 @@
 		"prepack": "npm run build",
 		"prepare": "lefthook install",
 		"publish:npm": "np --any-branch",
-		"test": "uvu -r tsm tests"
+		"test": "uvu tests"
 	},
 	"files": [
 		"bin/",
