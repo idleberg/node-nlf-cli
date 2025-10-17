@@ -1,4 +1,4 @@
-// Dependencies
+#!/usr/bin/env node
 
 import { promises as fs } from 'node:fs';
 import { basename, dirname, extname, join, resolve } from 'node:path';
@@ -59,7 +59,10 @@ async function fileMode(args, options) {
 
 		if (input.endsWith('.nlf')) {
 			try {
-				output = NLF.parse(contents, { stringify: true, minify: options.minify });
+				output = NLF.parse(contents, {
+					stringify: true,
+					minify: options.minify,
+				});
 				await printResult(input, output, 'json');
 			} catch {
 				console.error(`${symbols.error} ${input} failed`);
@@ -85,7 +88,10 @@ async function streamMode(input, options) {
 		await printResult(input, output);
 	} catch (err) {
 		if (err instanceof SyntaxError) {
-			const output = NLF.parse(input, { stringify: true, minify: options.minify });
+			const output = NLF.parse(input, {
+				stringify: true,
+				minify: options.minify,
+			});
 			await printResult(input, output);
 		} else {
 			console.error(err);
