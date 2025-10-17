@@ -23,7 +23,7 @@
 		"README.md"
 	],
 	"bin": {
-		"nlf": "./bin./cli.js"
+		"nlf": "./bin/cli.js"
 	},
 	"type": "module",
 	"engines": {
