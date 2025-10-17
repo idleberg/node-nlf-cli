@@ -17,12 +17,12 @@ importers:
       get-stdin:
         specifier: ^9.0.0
         version: 9.0.0
+      glob:
+        specifier: ^11.0.3
+        version: 11.0.3
       log-symbols:
         specifier: ^7.0.1
         version: 7.0.1
-      update-notifier:
-        specifier: 7.3.1
-        version: 7.3.1
     devDependencies:
       '@commitlint/cli':
         specifier: ^20.1.0
@@ -42,9 +42,6 @@ importers:
       execa:
         specifier: ^9.6.0
         version: 9.6.0
-      glob:
-        specifier: ^11.0.3
-        version: 11.0.3
       knip:
         specifier: ^5.65.0
         version: 5.66.0(@types/node@24.8.0)(typescript@5.3.3)
