@@ -59,10 +59,7 @@ async function fileMode(args: string[], options: OptionValues) {
 
 		if (input.endsWith('.nlf')) {
 			try {
-				output = NLF.parse(contents, {
-					stringify: true,
-					minify: options.minify,
-				});
+				output = stringify(contents, options.minify);
 				await printResult(input, output, 'json');
 			} catch {
 				console.error(`${symbols.error} ${input} failed`);
@@ -88,10 +85,7 @@ async function streamMode(input: string, options: OptionValues) {
 		await printResult(input, output);
 	} catch (err) {
 		if (err instanceof SyntaxError) {
-			const output = NLF.parse(input, {
-				stringify: true,
-				minify: options.minify,
-			});
+			const output = stringify(input, options.minify);
 			await printResult(input, output);
 		} else {
 			console.error(err);
@@ -115,4 +109,8 @@ async function printResult(input: string, output: string, extension = 'json') {
 
 function setOutName(file: string, extName: string) {
 	return basename(file, extname(file)) + extName;
+}
+
+function stringify(contents: string, minify: boolean) {
+	return JSON.stringify(NLF.parse(contents), null, minify ? 0 : 2);
 }
