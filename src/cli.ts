@@ -4,7 +4,7 @@ import { promises as fs } from 'node:fs';
 import { basename, dirname, extname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import * as NLF from '@nsis/nlf';
-import { program } from 'commander';
+import { type OptionValues, program } from 'commander';
 import getStdin from 'get-stdin';
 import symbols from 'log-symbols';
 
@@ -45,7 +45,7 @@ const options = program.opts();
 	}
 })();
 
-async function fileMode(args, options) {
+async function fileMode(args: string[], options: OptionValues) {
 	let contents: string;
 	let output: string;
 
@@ -80,7 +80,7 @@ async function fileMode(args, options) {
 	});
 }
 
-async function streamMode(input, options) {
+async function streamMode(input: string, options: OptionValues) {
 	try {
 		JSON.parse(input);
 
@@ -99,7 +99,7 @@ async function streamMode(input, options) {
 	}
 }
 
-function printResult(input: string, output: string, extension = 'json') {
+async function printResult(input: string, output: string, extension = 'json') {
 	let outputFile: string;
 	let outputPath: string;
 
@@ -108,7 +108,7 @@ function printResult(input: string, output: string, extension = 'json') {
 	} else {
 		outputFile = setOutName(input, `.${extension}`);
 		outputPath = options.output ? join(options.output, outputFile) : outputFile;
-		fs.writeFile(outputPath, output);
+		await fs.writeFile(outputPath, output);
 		console.log(`${symbols.success} ${input} → ${outputPath}`);
 	}
 }
