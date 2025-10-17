@@ -1,12 +1,12 @@
 import { spawnSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import { basename, dirname, join, resolve } from 'node:path';
-import { globby } from 'globby';
+import { globSync } from 'glob';
 import { test } from 'uvu';
 import * as assert from 'uvu/assert';
 
-const cli = resolve(process.cwd(), 'index.mjs');
-const files = await globby(resolve(process.cwd(), 'tests/fixtures/*.nlf'));
+const cli = resolve(process.cwd(), 'src/cli.ts');
+const files = globSync(resolve(process.cwd(), 'tests/fixtures/*.nlf'));
 
 for (const file of files) {
 	const fileDir = dirname(file);
